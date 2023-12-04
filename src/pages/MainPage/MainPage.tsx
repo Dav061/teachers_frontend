@@ -22,8 +22,8 @@ const MainPage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [searchValue, setSearchValue] = useState("");
-//   const [sliderValues, setSliderValues] = useState([0, 10000]);
-  const [facultyValue, setFacultyValue] = useState("Любая категория");
+//   const [alphabetValues, setAlphabetValues] = useState(['a', 'z']);
+  const [facultyValue, setFacultyValue] = useState("Любой факультет");
 
 //   const handleSliderChange = (values: number[]) => {
 //     setSliderValues(values);
@@ -35,8 +35,8 @@ const MainPage = () => {
 
   useEffect(() => {
     const params = searchValue
-      ? `?search=${encodeURIComponent(searchValue)}}`:
-      `?faculty=${encodeURIComponent(facultyValue)}`;
+      ? `?search=${encodeURIComponent(searchValue)}&faculty=${encodeURIComponent(facultyValue)}` 
+      : `?faculty=${encodeURIComponent(facultyValue)}`;
     
     fetch(`${DOMEN}/options/${params}`) //!!!!!!!!!!!!!!!
       .then((response) => response.json())
@@ -90,7 +90,7 @@ const MainPage = () => {
             <DropDown
               onChangeValue={handleDropDownChange}
               options={FACULTY}
-              defaultTitle="Факультет"
+              defaultTitle="Любой факультет"
             />
             {/* <SliderFilter
               onChangeValues={handleSliderChange}
