@@ -12,4 +12,3 @@ export default interface Option {
     available: boolean;
     image: string;
   };
-  

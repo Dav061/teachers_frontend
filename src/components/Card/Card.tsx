@@ -1,7 +1,7 @@
 import React from "react";
 
 import styles from "./card.module.scss";
-import defTeacher from "../../assets/icons/flight.png";
+// import defTeacher from "../../assets/icons/flight.png";
 
 import { cardInfoProps } from "../../types";
 // import svg from "../../assets/react.svg"
@@ -15,7 +15,7 @@ const Card: React.FC<cardInfoProps> = ({ title, faculty, image }) => {
         ) : (
           <img
             className={styles.card__image_img}
-            src={defTeacher}
+            // src={defTeacher}
             alt="sss"
           ></img>
         )}

@@ -13,9 +13,9 @@ export type InputProps = Omit<
 };
 
 const Input: React.FC<InputProps> = ({ onChangeValue }) => {
-  // const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   onChangeValue(event.target.value);
-  // };
+    // const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //   onChangeValue(event.target.value);
+    // };
 
   const onUpdateSearch = useCallback(
     debounce((str) => {

@@ -14,7 +14,7 @@ import styles from "./mainpage.module.scss";
 
 import Option from "../../types";
 import { cardInfoProps } from "../../types";
-import { DOMEN, FACULTY } from "../../consts";
+import { DOMEN, FACULTY} from "../../consts";
 import { OptionsMock } from "../../consts";
 
 const MainPage = () => {
@@ -106,7 +106,7 @@ const MainPage = () => {
             ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
             : items.map((item: cardInfoProps) => (
                 <Link
-                  to={`/my-app/${item.id}`}
+                  to={`/teachers_frontend/${item.id}`}
                   key={item.id}
                   style={{ textDecoration: "none", color: "black" }}
                 >

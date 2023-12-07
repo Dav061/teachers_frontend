@@ -13,11 +13,11 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to="/my-app" replace />}
+          element={<Navigate to="/teachers_frontend/" replace />}
         />
-        <Route path="/my-app" element={<MainPage />} />
+        <Route path="/teachers_frontend/" element={<MainPage />} />
         {}
-        <Route path="/my-app/:id" element={<TeacherPage />} />
+        <Route path="/teachers_frontend/:id" element={<TeacherPage />} />
       </Routes>
     </>
   );

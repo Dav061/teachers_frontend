@@ -23,7 +23,7 @@ const Breadcrumps = () => {
   return (
     <div className={styles.breadcrumps}>
       <div className={styles.crump}>
-        <Link to={"/"}>Main</Link>
+        <Link to={"/"}>Главная</Link>
       </div>
       {crumps}
     </div>
