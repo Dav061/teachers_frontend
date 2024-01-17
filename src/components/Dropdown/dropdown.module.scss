@@ -2,11 +2,12 @@
 
 .dropdown {
   &__toggle {
+    height:50px;
     background-color: $brand-color;
     border: 1px solid $brand-color;
 
     &:hover {
-      background-color: rgb(23, 186, 186);
+      background-color: rgb(1, 5, 5);
     }
   }
 }
