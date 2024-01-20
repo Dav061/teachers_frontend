@@ -12,6 +12,8 @@ const Breadcrumps = () => {
     .filter((crump) => crump !== "")
     .map((crump) => {
       currentLink += `/${crump}`;
+    
+    if (crump == "teachers_frontend") crump = "Преподаватели"
 
       return (
         <div className={styles.crump} key={crump}>
