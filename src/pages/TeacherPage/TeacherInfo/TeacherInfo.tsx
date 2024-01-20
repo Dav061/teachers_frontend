@@ -54,7 +54,7 @@ const TeacherInfo: React.FC<TeacherInfoProps> = ({ id }) => {
         ) : (
           <img
             className={styles.teacherinfo__image_img}
-            src={defTeacher}
+            src={mock ? `../${OptionsMock[0].image}` : defTeacher}
             alt="aaa"
           ></img>
         )}
