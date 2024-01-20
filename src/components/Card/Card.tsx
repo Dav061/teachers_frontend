@@ -1,7 +1,7 @@
 import React from "react";
 
 import styles from "./card.module.scss";
-// import defTeacher from "../../assets/icons/flight.png";
+// import defTeacher from "../../assets/icons/none.png";
 
 import { cardInfoProps } from "../../types";
 // import svg from "../../assets/react.svg"

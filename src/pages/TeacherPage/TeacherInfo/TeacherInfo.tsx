@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import defTeacher from "../../../assets/icons/flight.png";
+import defTeacher from "../../../assets/icons/none.png";
 
 import styles from "./Teacherinfo.module.scss";
 
