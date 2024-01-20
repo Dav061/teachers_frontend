@@ -26,3 +26,6 @@ input {
 .Toastify__progress-bar {
   background-color: black;
 }
+table {
+  height: auto;
+}

@@ -4,18 +4,44 @@ import hisSvg from "../../assets/icons/history2.svg"
 import optList from "../../assets/icons/options.png"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
-
+import { useLocation, useNavigate } from "react-router-dom"
+import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion"
-
+import Cookies from "universal-cookie";
 import styles from "./header.module.scss"
 import { Link } from "react-router-dom"
 import ProfileInfo from "../ProfileInfo/ProfileInfo"
 import { RootState } from "../../store/store"
-
+import { cleanUser } from "../../store/userSlice"
+import { toast } from "react-toastify"
+const cookies = new Cookies();
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logout = async () => {
+    try {
+      const response: Response = await axios(`http://localhost:8000/logout/`, {
+        method: "POST",
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${cookies.get("access_token")}`,
+        },
+      });
+      cookies.remove("access_token", { path: "/" });
+      dispatch(cleanUser());
+      toast.success("Выход выполнен успешно", {
+        icon: "✅",
+      });
+
+      navigate("/teachers_frontend");
+    } catch {
+      console.log("kaka");
+    }
+  };
+  const user = useSelector((state: RootState) => state.user);
   const location = useLocation()
   // const cart = useSelector((state: RootState) => state.cart.items.length)
+  const currentCart = useSelector((state: RootState) => state.user.current_cart)
   const [v, sV] = useState(false)
   const isAuth = useSelector((state: RootState) => state.user.is_authenticated)
   const isModerator = useSelector((state: RootState) => state.user.is_moderator)
@@ -23,6 +49,10 @@ const Header = () => {
   // useEffect(() => {
   //   console.log("header render")
   // }, [cart])
+  const handleSubmit = async () => {
+    await logout();
+  };
+  // const user = useSelector((state: RootState) => state.user);
   return (
     <div className={styles.header}>
       <div className={styles.container}>
@@ -48,7 +78,7 @@ const Header = () => {
             isAuth &&
             !isModerator &&
             (isCartEmpty != -1 ? (
-              <Link to="/teachers_frontend/cart">
+              <Link to={`/teachers_frontend/application/${currentCart}`}>
                 <div className={styles.cart}>
                   <img src={cartSvg} alt="Cart" />
                   {/* <div className={styles.cart_badge}>{cart}</div> */}
@@ -67,8 +97,15 @@ const Header = () => {
               </div>
             </Link>
           )}
+          <div>{user.user_email}</div>
+          {!user.is_authenticated ?
+          <Link to="/teachers_frontend/auth">
+          <span className={styles.menu__login}>авторизоваться</span>
+        </Link>:<div style={{cursor:"pointer", textDecoration:"underline"}} onClick={handleSubmit}>Выйти</div>
+          }
+          
 
-          <div
+          {/* <div
             className={styles.user}
             onClick={() => {
               sV(!v)
@@ -88,7 +125,7 @@ const Header = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

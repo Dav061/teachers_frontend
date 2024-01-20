@@ -15,35 +15,35 @@ import {
   setAppDropdownValueId,
   setAppDropdownValueName,
   setAppInputValue,
+  setAppEndDay,
+  setAppStartDay
 } from "../../store/moderAppSlice"
 import { applicationData } from "../../types"
 import { STATUSES } from "../../consts"
 import DropDown from "../Dropdown/Dropdown"
 import { toast } from "react-toastify"
-// declare module "date.d.ts"
-// import { DateRange } from "react-date-range"
-// import { ru } from "date-fns/locale"
-// import "react-date-range/dist/styles.css" // main style file
-// import "react-date-range/dist/theme/default.css" // theme css file
-// import { RangeKeyDict } from "react-date-range"
 import moment from "moment"
 
 const cookies = new Cookies()
-// interface DateRangeInterface {
-//   selection: {
-//     startDate: Date
-//     endDate: Date
-//   }
-// }
+
 const ApplicationsHistoryTable = () => {
   const [application, setApplication] = useState<applicationData[]>([])
-  // const [applicationRange, setApplicationRange] = useState<applicationData[]>(
-  //   []
-  // )
-  const [startDate, setStartDate] = useState("")
-  const [endDate, setEndDate] = useState("")
+  const [startDate, setStartDate] = useState(localStorage.getItem('startDate') || "");
+  const [endDate, setEndDate] = useState(localStorage.getItem('endDate') || "");
+
   const isModerator = useSelector((state: RootState) => state.user.is_moderator)
   const dispatch = useDispatch()
+
+  const handleStartDateChange = (newDate: string) => {
+    setStartDate(newDate);
+    localStorage.setItem('startDate', newDate);
+   }
+   
+   const handleEndDateChange = (newDate: string) => {
+    setEndDate(newDate);
+    localStorage.setItem('endDate', newDate);
+   }
+
 
   const selectedStatus = useSelector(
     (state: RootState) => state.moderApp.dropdown_value.id
@@ -54,6 +54,7 @@ const ApplicationsHistoryTable = () => {
   const facultyValue = useSelector(
     (state: RootState) => state.moderApp.dropdown_value
   )
+  
 
   const handleSelect = (selectedOption: Option) => {
     dispatch(setAppDropdownValueName(selectedOption.name))
@@ -62,7 +63,7 @@ const ApplicationsHistoryTable = () => {
 
   const fetchAppsData = async () => {
     try {
-      const params = `?start_day=${startDate}&end_day=${endDate}&faculty=${encodeURIComponent(
+      const params = `?start_day=${startDate}&end_day=${endDate}&status=${encodeURIComponent(
         facultyValue.id
       )}`
 
@@ -299,14 +300,14 @@ const ApplicationsHistoryTable = () => {
             isDate={true}
             placeholder="DD-MM-YYYY"
             searchValue={startDate}
-            onChangeValue={setStartDate}
+            onChangeValue={handleStartDateChange}
           />
           <div style={{ fontSize: "30px" }}>до</div>
           <Input
             isDate={true}
             placeholder="DD-MM-YYYY"
             searchValue={endDate}
-            onChangeValue={setEndDate}
+            onChangeValue={handleEndDateChange}
           />
         </div>
       )}

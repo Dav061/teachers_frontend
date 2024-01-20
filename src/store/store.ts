@@ -15,6 +15,8 @@ export interface RootState {
     // l:number
   }
   filter: {
+    start_day: any
+    end_day: any
     input_value: string
     dropdown_value: Option
     options: optionData[]
@@ -25,6 +27,8 @@ export interface RootState {
   moderApp: {
     input_value: string
     dropdown_value: Option
+    start_day:string
+    end_day:string
   }
 }
 

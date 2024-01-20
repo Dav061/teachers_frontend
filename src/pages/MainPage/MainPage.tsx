@@ -143,13 +143,14 @@ const MainPage = () => {
     e.stopPropagation()
     e.preventDefault()
     addOptionToApp(id)
+    fetchData()
     // setTimeout(() => {
     //   fetchCart()
     // }, 200)
   }
   useEffect(() => {
     fetchData()
-  }, [searchValue, facultyValue])
+  }, [])
 
   const handleSelect = (selectedOption: Option) => {
     dispatch(setDropdownValueName(selectedOption.name))
@@ -166,7 +167,7 @@ const MainPage = () => {
               searchValue={searchValue}
               onChangeValue={(i) => dispatch(setInputValue(i))}
             />
-            <Button>Поиск</Button>
+            <Button onClick={()=>fetchData()}>Поиск</Button>
           </div>
           <div className={styles.mainpage__filters}>
             <DropDown

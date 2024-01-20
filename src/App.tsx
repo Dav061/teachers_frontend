@@ -116,7 +116,7 @@ function App() {
       login()
       // fetchCart()
     }
-  })
+  },[])
   // React.useEffect(() => {
   //   handleSmt()
   //   // const cartId = await fetchData()

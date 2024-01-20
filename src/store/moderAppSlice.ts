@@ -7,6 +7,8 @@ const initialState = {
     id: 0,
     name: "Все статусы",
   },
+  start_day:"",
+  end_day:""
 }
 
 const moderAppSlice = createSlice({
@@ -22,6 +24,12 @@ const moderAppSlice = createSlice({
     setAppDropdownValueName(state, action) {
       state.dropdown_value.name = action.payload
     },
+    setAppStartDay(state, action) {
+      state.start_day = action.payload
+    },
+    setAppEndDay(state, action) {
+      state.end_day = action.payload
+    },
   },
 })
 
@@ -29,5 +37,7 @@ export const {
   setAppDropdownValueId,
   setAppDropdownValueName,
   setAppInputValue,
+  setAppStartDay,
+  setAppEndDay
 } = moderAppSlice.actions
 export default moderAppSlice.reducer
