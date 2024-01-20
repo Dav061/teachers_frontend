@@ -48,13 +48,13 @@ const TeacherInfo: React.FC<TeacherInfoProps> = ({ id }) => {
         {info && info.image ? (
           <img
             className={styles.teacherinfo__image_img}
-            src={mock ? `../${info.image}` : info.image}
+            src={mock ? `../${OptionsMock[0].image}` : defTeacher}
             alt="sssss"
           ></img>
         ) : (
           <img
             className={styles.teacherinfo__image_img}
-            src={mock ? `../${OptionsMock[0].image}` : defTeacher}
+            src={defTeacher}
             alt="aaa"
           ></img>
         )}
