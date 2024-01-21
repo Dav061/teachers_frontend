@@ -60,4 +60,9 @@ export default interface Option {
     moderator: string
     customer: Customer
   }
+
+  export interface Dates {
+    start_date: string
+    end_date: string
+  }
   

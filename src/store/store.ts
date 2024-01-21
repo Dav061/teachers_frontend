@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
-import Option, { optionData } from "../types"
+import Option, { Dates, optionData } from "../types"
 import userReducer from "./userSlice"
 import filterReducer from "./filtersSlices"
 import cartReducer from "./cartSlice"
@@ -27,8 +27,7 @@ export interface RootState {
   moderApp: {
     input_value: string
     dropdown_value: Option
-    start_day:string
-    end_day:string
+    date_value: Dates
   }
 }
 

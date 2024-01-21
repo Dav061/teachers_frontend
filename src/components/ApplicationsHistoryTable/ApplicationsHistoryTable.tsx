@@ -15,8 +15,8 @@ import {
   setAppDropdownValueId,
   setAppDropdownValueName,
   setAppInputValue,
-  setAppEndDay,
-  setAppStartDay
+  setAppEndDate,
+  setAppStartDate,
 } from "../../store/moderAppSlice"
 import { applicationData } from "../../types"
 import { STATUSES } from "../../consts"
@@ -28,21 +28,9 @@ const cookies = new Cookies()
 
 const ApplicationsHistoryTable = () => {
   const [application, setApplication] = useState<applicationData[]>([])
-  const [startDate, setStartDate] = useState(localStorage.getItem('startDate') || "");
-  const [endDate, setEndDate] = useState(localStorage.getItem('endDate') || "");
 
   const isModerator = useSelector((state: RootState) => state.user.is_moderator)
   const dispatch = useDispatch()
-
-  const handleStartDateChange = (newDate: string) => {
-    setStartDate(newDate);
-    localStorage.setItem('startDate', newDate);
-   }
-   
-   const handleEndDateChange = (newDate: string) => {
-    setEndDate(newDate);
-    localStorage.setItem('endDate', newDate);
-   }
 
 
   const selectedStatus = useSelector(
@@ -54,7 +42,12 @@ const ApplicationsHistoryTable = () => {
   const facultyValue = useSelector(
     (state: RootState) => state.moderApp.dropdown_value
   )
-  
+  const startDay = useSelector(
+    (state: RootState) => state.moderApp.date_value.start_date
+  )
+  const endDay = useSelector(
+    (state: RootState) => state.moderApp.date_value.end_date
+  )
 
   const handleSelect = (selectedOption: Option) => {
     dispatch(setAppDropdownValueName(selectedOption.name))
@@ -63,7 +56,7 @@ const ApplicationsHistoryTable = () => {
 
   const fetchAppsData = async () => {
     try {
-      const params = `?start_day=${startDate}&end_day=${endDate}&status=${encodeURIComponent(
+      const params = `?start_day=${startDay}&end_day=${endDay}&status=${encodeURIComponent(
         facultyValue.id
       )}`
 
@@ -131,7 +124,7 @@ const ApplicationsHistoryTable = () => {
     }, 1000)
     moment.locale("ru")
     return () => clearInterval(intervalId)
-  }, [facultyValue, startDate, endDate])
+  }, [facultyValue, startDay, endDay])
 
   const data = application.filter((item) =>
     item.customer.email
@@ -259,28 +252,6 @@ const ApplicationsHistoryTable = () => {
 
   
 
-  // const handleSelectDateRange = (date: RangeKeyDict) => {
-  //   if (
-      // !date.selection ||
-      // !date.selection.startDate ||
-      // !date.selection.endDate
-  //   ) {
-  //     return
-  //   }
-
-    // let filtered = applicationRange.filter((product) => {
-    //   let productDate = new Date(product["created_at"])
-    //   return (
-    //     productDate >= date.selection.startDate &&
-    //     productDate <= date.selection.endDate
-    //   )
-    // })
-  //   setStartDate(date.selection.startDate)
-  //   setEndDate(date.selection.endDate)
-  //   // setApplication(filtered) //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //   console.log(startDate)
-  //   console.log(endDate)
-  // }
   return (
     <>
       {isModerator && (
@@ -299,15 +270,15 @@ const ApplicationsHistoryTable = () => {
           <Input
             isDate={true}
             placeholder="DD-MM-YYYY"
-            searchValue={startDate}
-            onChangeValue={handleStartDateChange}
+            searchValue={startDay}
+            onChangeValue={(i) => dispatch(setAppStartDate(i))}
           />
           <div style={{ fontSize: "30px" }}>до</div>
           <Input
             isDate={true}
             placeholder="DD-MM-YYYY"
-            searchValue={endDate}
-            onChangeValue={handleEndDateChange}
+            searchValue={endDay}
+            onChangeValue={(i) => dispatch(setAppEndDate(i))}
           />
         </div>
       )}
