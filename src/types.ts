@@ -1,13 +1,13 @@
 import { AxiosResponse } from "axios"
 import { MouseEventHandler } from "react"
 
-export default interface Option {
+export default interface Teacher {
     id: number;
     name: string;
   }
   
 
-  export interface optionData {
+  export interface teacherData {
     id: number
     title: string
     faculty: string

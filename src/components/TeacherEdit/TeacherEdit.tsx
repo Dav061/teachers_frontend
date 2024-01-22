@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
 import Button from "../Button/Button"
 import { Response } from "../../types"
-import styles from "./optionedit.module.scss"
+import styles from "./teacheredit.module.scss"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import DropDown from "../Dropdown/Dropdown"
-import Option from "../../types"
+import Teacher from "../../types"
 import axios from "axios"
 import { toast } from "react-toastify"
 import uploadIcon from "../../assets/icons/upload.png"
@@ -26,12 +26,12 @@ const LIST = [
   },
 ]
 
-const OptionEdit = () => {
+const TeacherEdit = () => {
   const [status, setStatus] = useState(LIST[0])
   const [drag, setDrag] = useState(false)
   const [imageFile, setFile] = useState<File>()
   const navigate = useNavigate()
-  const [optionAdd, setOptionAdd] = useState<number>()
+  const [teacherAdd, setTeacherAdd] = useState<number>()
 
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
@@ -45,11 +45,11 @@ const OptionEdit = () => {
     }
   }, [])
 
-  const postOption = async (formData: FormData) => {
+  const postTeacher = async (formData: FormData) => {
     try {
       const url = isEdit
-        ? `http://127.0.0.1:8000/options/${id}/put/`
-        : `http://127.0.0.1:8000/options/post/`
+        ? `http://127.0.0.1:8000/teachers/${id}/put/`
+        : `http://127.0.0.1:8000/teachers/post/`
       const response: Response = await axios(url, {
         method: isEdit ? "PUT" : "POST",
         headers: {
@@ -62,7 +62,7 @@ const OptionEdit = () => {
       })
       console.log(response.data.id)
 
-      navigate("/teachers_frontend/options-list")
+      navigate("/teachers_frontend/teachers-list")
       return response.data.id
     } catch {
       toast.error("Проверьте введенные данные", {
@@ -71,12 +71,12 @@ const OptionEdit = () => {
     }
   }
 
-  const postOptionImage = async (file: File, optionId: number) => {
+  const postTeacherImage = async (file: File, teacherId: number) => {
     try {
       const formData = new FormData()
       formData.append("file", file)
       const response: Response = await axios(
-        `http://127.0.0.1:8000/options/${optionId}/image/post/`,
+        `http://127.0.0.1:8000/teachers/${teacherId}/image/post/`,
         {
           method: "POST",
           headers: {
@@ -89,7 +89,7 @@ const OptionEdit = () => {
       toast.success("Изображение успешно добавлено", {
         icon: "✅",
       })
-      // navigate("/planesDevelopment_frontend/options-list")
+      // navigate("/planesDevelopment_frontend/teachers-list")
     } catch {}
   }
 
@@ -98,9 +98,9 @@ const OptionEdit = () => {
 
     const formData: FormData = new FormData(e.target as HTMLFormElement)
     formData.append("available", status.available.toString())
-    const optionId = await postOption(formData)
-    console.log(optionId)
-    await postOptionImage(imageFile, optionId)
+    const teacherId = await postTeacher(formData)
+    console.log(teacherId)
+    await postTeacherImage(imageFile, teacherId)
   }
 
   const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {
@@ -120,8 +120,8 @@ const OptionEdit = () => {
     console.log(imageFile)
   }
 
-  const handleStatusChange = (selectedOption: Status) => {
-    setStatus(selectedOption)
+  const handleStatusChange = (selectedTeacher: Status) => {
+    setStatus(selectedTeacher)
     // console.log(status)
   }
 
@@ -227,4 +227,4 @@ const OptionEdit = () => {
   )
 }
 
-export default OptionEdit
+export default TeacherEdit

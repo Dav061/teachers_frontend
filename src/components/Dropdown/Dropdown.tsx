@@ -5,16 +5,16 @@ import {
   setDropdownValueId,
   setDropdownValueName,
 } from "../../store/filtersSlices"
-import Option from "../../types"
+import Teacher from "../../types"
 
 export type DropDownProps = {
-  options: Option[]
+  teachers: Teacher[]
   title: string
-  handleSelect: (value: Option) => void
+  handleSelect: (value: Teacher) => void
 }
 
 const DropDown: React.FC<DropDownProps> = ({
-  options,
+  teachers,
   title,
   handleSelect,
 }) => {
@@ -25,9 +25,9 @@ const DropDown: React.FC<DropDownProps> = ({
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdown__menu}>
-        {options.map((option) => (
-          <Dropdown.Item onClick={() => handleSelect(option)} key={option.id}>
-            {option.name}
+        {teachers.map((teacher) => (
+          <Dropdown.Item onClick={() => handleSelect(teacher)} key={teacher.id}>
+            {teacher.name}
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>

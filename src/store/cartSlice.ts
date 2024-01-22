@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { optionData } from "../types"
+import { teacherData } from "../types"
 
 interface cartData {
-  items: optionData[]
+  items: teacherData[]
 }
 
 const cartSlice = createSlice({
@@ -11,10 +11,10 @@ const cartSlice = createSlice({
     items: [],
   } as cartData,
   reducers: {
-    setCart: (state, action: PayloadAction<optionData[]>) => {
+    setCart: (state, action: PayloadAction<teacherData[]>) => {
       state.items = action.payload
     },
-    addItem: (state, action: PayloadAction<optionData>) => {
+    addItem: (state, action: PayloadAction<teacherData>) => {
       state.items.push(action.payload)
     },
     removeItem(state, action: PayloadAction<number>) {

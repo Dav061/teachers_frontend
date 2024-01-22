@@ -47,7 +47,7 @@ export const STATUSES = [
 ]
 
 // import engine from "./assets/engine.png"
-export const OptionsMock = [
+export const TeachersMock = [
   {
     id: 1,
     title: "Антонова Виктория Сергеевна",

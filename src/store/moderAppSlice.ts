@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-// import Option from "../types";
+// import Teacher from "../types";
 
 const initialState = {
   input_value: "",
@@ -32,6 +32,9 @@ const moderAppSlice = createSlice({
     setAppEndDate(state, action) {
       state.date_value.end_date = action.payload
     },
+    resetModerFilters(state) {
+      return initialState;
+    },
   },
 })
 
@@ -41,5 +44,6 @@ export const {
   setAppInputValue,
   setAppStartDate,
   setAppEndDate,
+  resetModerFilters,
 } = moderAppSlice.actions
 export default moderAppSlice.reducer

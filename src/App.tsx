@@ -18,14 +18,14 @@ import Cart from "./components/Cart/Cart"
 import CartPage from "./pages/CartPage/CartPage"
 import ApplicationsHistoryPage from "./pages/ApplicationsHistoryPage/ApplicationsHistoryPage"
 import { RootState } from "./store/store"
-import { setOptions } from "./store/filtersSlices"
+import { setTeachers } from "./store/filtersSlices"
 import { setCart } from "./store/cartSlice"
-import { OptionsMock } from "./consts"
+import { TeachersMock } from "./consts"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import OptionsList from "./pages/OptionsList/OptionsList"
+import TeachersList from "./pages/TeachersList/TeachersList"
 import Sas from "./pages/sas"
-import OptionAdminPanel from "./pages/OptionAdminPanel/OptionAdminPanel"
+import TeacherAdminPanel from "./pages/TeacherAdminPanel/TeacherAdminPanel"
 const cookies = new Cookies()
 function App() {
   const url = window.location.pathname.split("/").pop()
@@ -73,16 +73,16 @@ function App() {
   //     const params = searchValue
   //       ? `?search=${encodeURIComponent(searchValue)}&faculty=${encodeURIComponent(facultyValue)}`
   //       : `?faculty=${encodeURIComponent(facultyValue)}`;
-  //     const response = await axios(`http://localhost:8000/options/${params}`, {
+  //     const response = await axios(`http://localhost:8000/teachers/${params}`, {
   //       method: "GET",
   //       withCredentials: true,
   //     })
   //     console.log(response)
-  //     const options = response.data.options
+  //     const teachers = response.data.teachers
   //     if (response.data.app_id) {
   //       dispatch(updateCart(response.data.app_id))
   //     }
-  //     dispatch(setOptions(options))
+  //     dispatch(setTeachers(teachers))
   //     setIsLoading(false)
   //     console.log(response.data.app_id)
   //     return response.data.app_id
@@ -104,8 +104,8 @@ function App() {
         }
       )
       console.log(response.data)
-      const options = response.data.options
-      dispatch(setCart(options))
+      const teachers = response.data.teachers
+      dispatch(setCart(teachers))
     } catch (error) {
       console.log(error)
     }
@@ -127,22 +127,22 @@ function App() {
   // }
 
   // const createMock = () => {
-  //   let filteredOptions: cardInfoProps[] = OptionsMock.filter(
-  //     (option) => option.available == true
+  //   let filteredTeachers: cardInfoProps[] = TeachersMock.filter(
+  //     (teacher) => teacher.available == true
   //   )
 
   //   if (searchValue) {
-  //     filteredOptions = filteredOptions.filter((option) =>
-  //       option.title.includes(searchValue)
+  //     filteredTeachers = filteredTeachers.filter((teacher) =>
+  //       teacher.title.includes(searchValue)
   //     )
   //   }
 
   //   if (facultyValue != "Любой факультет") {
-  //     filteredOptions = filteredOptions.filter(
-  //       (option) => option.faculty == facultyValue
+  //     filteredTeachers = filteredTeachers.filter(
+  //       (teacher) => teacher.faculty == facultyValue
   //     )
   //   }
-  //   dispatch(setOptions(filteredOptions))
+  //   dispatch(setTeachers(filteredTeachers))
   // }
   return (
     <>
@@ -173,12 +173,12 @@ function App() {
           element={<CartPage />}
         />
         <Route
-          path="/teachers_frontend/options-list"
-          element={<OptionsList />}
+          path="/teachers_frontend/teachers-list"
+          element={<TeachersList />}
         />
         <Route
-          path="/teachers_frontend/options-list/:id"
-          element={<OptionAdminPanel />}
+          path="/teachers_frontend/teachers-list/:id"
+          element={<TeacherAdminPanel />}
         />
       </Routes>
       <ToastContainer autoClose={1000} pauseOnHover={false} />

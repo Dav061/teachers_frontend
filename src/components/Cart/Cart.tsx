@@ -55,7 +55,7 @@ const Cart = () => {
       setTimeLesson(response.data.time_lesson)
 
       console.log(response.data)
-      setCartItems(response.data.options)
+      setCartItems(response.data.teachers)
     } catch (e) {
       console.log(e)
     }
@@ -109,7 +109,7 @@ const Cart = () => {
   const deleteItem = async (itemId: number) => {
     try {
       const responce = await axios(
-        `http://localhost:8000/applications/${cartApplication}/delete_option/${itemId}/`,
+        `http://localhost:8000/applications/${cartApplication}/delete_teacher/${itemId}/`,
         {
           method: "DELETE",
           // withCredentials: true,
@@ -180,10 +180,10 @@ const Cart = () => {
           </div>
         </div>
         <div className={styles.cart__content}>
-          {cartItems.map((option) => (
+          {cartItems.map((teacher) => (
             <CartItem
-              key={option.id}
-              {...option}
+              key={teacher.id}
+              {...teacher}
               onDelete={deleteItem}
               updateAllow={true}
             />
@@ -209,10 +209,10 @@ const Cart = () => {
           <div className={styles.cart__header_title}>Пара № {TimeLesson}</div>
         </div>
         <div className={styles.cart__content}>
-          {cartItems.map((option) => (
+          {cartItems.map((teacher) => (
             <CartItem
-              key={option.id}
-              {...option}
+              key={teacher.id}
+              {...teacher}
               onDelete={deleteItem}
               updateAllow={false}
             />

@@ -1,22 +1,22 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useTable, Column } from "react-table"
-import optionData from "../../types"
+import teacherData from "../../types"
 import { Response } from "../../types"
-import styles from "./optionstable.module.scss"
+import styles from "./teacherstable.module.scss"
 import Button from "../Button/Button"
 import deleteIcom from "../../assets/icons/delete.png"
 import editIcon from "../../assets/icons/edit.png"
 import { Link } from "react-router-dom"
 import addicon from '../../assets/icons/btn_plus.png'
 
-const OptionsTable = () => {
-  const [options, setOptions] = useState<optionData[]>([])
+const TeachersTable = () => {
+  const [teachers, setTeachers] = useState<teacherData[]>([])
 
-  const fetchOptions = async () => {
+  const fetchTeachers = async () => {
     try {
       axios.defaults.withCredentials = true
-      const response: Response = await axios(`http://localhost:8000/options/?status=3`, {
+      const response: Response = await axios(`http://localhost:8000/teachers/?status=3`, {
         method: "GET",
         //   credentials: 'include',
         withCredentials: true,
@@ -26,9 +26,9 @@ const OptionsTable = () => {
         //   },
       })
       if (response.status == 200) {
-        setOptions(response.data.options)
+        setTeachers(response.data.teachers)
       }
-      console.log(response.data.options)
+      console.log(response.data.teachers)
     } catch (e) {
       console.log(e)
     }
@@ -38,8 +38,8 @@ const OptionsTable = () => {
     try {
       const url =
         action == 1
-          ? `http://127.0.0.1:8000/options/${id}/delete/`
-          : `http://127.0.0.1:8000/options/${id}/put/`
+          ? `http://127.0.0.1:8000/teachers/${id}/delete/`
+          : `http://127.0.0.1:8000/teachers/${id}/put/`
 
       const method = action == 1 ? "PUT" : "PUT"
       const updatedData = {
@@ -56,7 +56,7 @@ const OptionsTable = () => {
       })
 
       console.log(response.data)
-      fetchOptions()
+      fetchTeachers()
     } catch (e) {
       console.log(e)
     }
@@ -92,7 +92,7 @@ const OptionsTable = () => {
           <div className={styles.moder_action}>
             <>
               <Link
-                to={`/teachers_frontend/options-list/${row.values.id}`}
+                to={`/teachers_frontend/teachers-list/${row.values.id}`}
               >
                 <img
                   // onClick={() => formApplication(row.values.id, 4)}
@@ -149,10 +149,10 @@ const OptionsTable = () => {
     []
   )
   useEffect(() => {
-    fetchOptions()
+    fetchTeachers()
   }, [])
 
-  const data = options
+  const data = teachers
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data })
@@ -187,7 +187,7 @@ const OptionsTable = () => {
         </table>
       </div>
       <div className={styles.addbutton}>
-        <Link to={`/teachers_frontend/options-list/0`}>
+        <Link to={`/teachers_frontend/teachers-list/0`}>
           <Button>Добавить нового преподавателя</Button>
         </Link>
       </div>
@@ -195,4 +195,4 @@ const OptionsTable = () => {
   )
 }
 
-export default OptionsTable
+export default TeachersTable

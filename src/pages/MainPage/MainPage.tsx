@@ -10,17 +10,17 @@ import Button from "../../components/Button/Button";
 import Skeleton from "../../components/Skeleton/Skeleton";
 import { RootState } from "../../store/store"
 import styles from "./mainpage.module.scss";
-import { setOptions } from "../../store/filtersSlices"
+import { setTeachers } from "../../store/filtersSlices"
 import { useDispatch, useSelector } from "react-redux"
 import {
   setDropdownValueId,
   setDropdownValueName,
   setInputValue,
 } from "../../store/filtersSlices"
-import Option from "../../types";
+import Teacher from "../../types";
 import { cardInfoProps } from "../../types";
 import { DOMEN, FACULTY} from "../../consts";
-import { OptionsMock } from "../../consts";
+import { TeachersMock } from "../../consts";
 import axios from "axios"
 import Cookies from "universal-cookie"
 import { updateCart } from "../../store/userSlice"
@@ -38,33 +38,33 @@ const MainPage = () => {
   const facultyValue = useSelector(
     (state: RootState) => state.filter.dropdown_value.name
   )
-  const options = useSelector((state: RootState) => state.filter.options)
+  const teachers = useSelector((state: RootState) => state.filter.teachers)
 
   const [isLoading, setIsLoading] = useState(true)
   
   const createMock = () => {
-    let filteredOptions: cardInfoProps[] = OptionsMock.filter(
-      (option) => option.available == true
+    let filteredTeachers: cardInfoProps[] = TeachersMock.filter(
+      (teacher) => teacher.available == true
     )
 
     if (searchValue) {
-      filteredOptions = filteredOptions.filter((option) =>
-        option.title.includes(searchValue)
+      filteredTeachers = filteredTeachers.filter((teacher) =>
+        teacher.title.includes(searchValue)
       )
     }
 
     if (facultyValue != "Любой факультет") {
-      filteredOptions = filteredOptions.filter(
-        (option) => option.faculty == facultyValue
+      filteredTeachers = filteredTeachers.filter(
+        (teacher) => teacher.faculty == facultyValue
       )
     }
-    dispatch(setOptions(filteredOptions))
+    dispatch(setTeachers(filteredTeachers))
   }
 
-  const addOptionToApp = async (id: number) => {
+  const addTeacherToApp = async (id: number) => {
     try {
       const response: Response = await axios(
-        `http://localhost:8000/options/${id}/add_to_application/`,
+        `http://localhost:8000/teachers/${id}/add_to_application/`,
         {
           method: "POST",
           withCredentials: true,
@@ -73,7 +73,7 @@ const MainPage = () => {
       console.log(response.data)
       if (response.data) {
         dispatch(updateCart(response.data.id))
-        dispatch(setCart(response.data.options))
+        dispatch(setCart(response.data.teachers))
       }
       toast.success("Добавлен в заявку", {
         icon: "✅",
@@ -104,8 +104,8 @@ const MainPage = () => {
   //       }
   //     )
   //     console.log(response.data)
-  //     const options = response.data.options
-  //     dispatch(setCart(options))
+  //     const teachers = response.data.teachers
+  //     dispatch(setCart(teachers))
   //   } catch (error) {
   //     console.log(error)
   //   }
@@ -116,16 +116,16 @@ const MainPage = () => {
       const params = searchValue
         ? `?search=${encodeURIComponent(searchValue)}&faculty=${encodeURIComponent(facultyValue)}`
         : `?faculty=${encodeURIComponent(facultyValue)}`;
-      const response = await axios(`http://localhost:8000/options/${params}`, {
+      const response = await axios(`http://localhost:8000/teachers/${params}`, {
         method: "GET",
         withCredentials: true,
       })
       console.log(response)
-      const options = response.data.options
+      const teachers = response.data.teachers
       if (response.data.app_id) {
         dispatch(updateCart(response.data.app_id))
       }
-      dispatch(setOptions(options))
+      dispatch(setTeachers(teachers))
       setIsLoading(false)
       console.log(response.data.app_id)
       return response.data.app_id
@@ -142,19 +142,24 @@ const MainPage = () => {
   ) => {
     e.stopPropagation()
     e.preventDefault()
-    addOptionToApp(id)
+    addTeacherToApp(id)
     fetchData()
     // setTimeout(() => {
     //   fetchCart()
     // }, 200)
   }
+
+  const user = useSelector((state: RootState) => state.user);
+
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [user.user_email])
 
-  const handleSelect = (selectedOption: Option) => {
-    dispatch(setDropdownValueName(selectedOption.name))
-    dispatch(setDropdownValueId(selectedOption.id))
+
+
+  const handleSelect = (selectedTeacher: Teacher) => {
+    dispatch(setDropdownValueName(selectedTeacher.name))
+    dispatch(setDropdownValueId(selectedTeacher.id))
   }
 
   return (
@@ -172,7 +177,7 @@ const MainPage = () => {
           <div className={styles.mainpage__filters}>
             <DropDown
               handleSelect={handleSelect}
-              options={FACULTY}
+              teachers={FACULTY}
               title={facultyValue}
             />
           </div>
@@ -181,7 +186,7 @@ const MainPage = () => {
         <div className={styles.mainpage__inner}>
           {isLoading
             ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-            : options.map((item: cardInfoProps) => (
+            : teachers.map((item: cardInfoProps) => (
                 <Link
                   to={`/teachers_frontend/${item.id}`}
                   key={item.id}

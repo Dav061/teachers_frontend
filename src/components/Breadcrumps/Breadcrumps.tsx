@@ -21,7 +21,7 @@ const Breadcrumps = () => {
       if (crump == "auth") crump = "Авторизация"
       if (crump == "registration") crump = "Регистрация"
       if (crump == "application") crump = "Заказ"
-      if (crump == "options-list") crump = "Список преподавателей"
+      if (crump == "teachers-list") crump = "Список преподавателей"
 
       return (
         <div className={styles.crump} key={crump}>

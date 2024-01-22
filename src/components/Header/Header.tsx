@@ -1,7 +1,7 @@
 import cartSvg from "../../assets/icons/bag-2.svg"
 import userSvg from "../../assets/icons/user.svg"
 import hisSvg from "../../assets/icons/history2.svg"
-import optList from "../../assets/icons/options.png"
+import optList from "../../assets/icons/teachers.png"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
@@ -14,6 +14,8 @@ import ProfileInfo from "../ProfileInfo/ProfileInfo"
 import { RootState } from "../../store/store"
 import { cleanUser } from "../../store/userSlice"
 import { toast } from "react-toastify"
+import { resetMainFilters } from "../../store/filtersSlices"
+import { resetModerFilters } from "../../store/moderAppSlice"
 const cookies = new Cookies();
 const Header = () => {
   const dispatch = useDispatch();
@@ -29,6 +31,8 @@ const Header = () => {
       });
       cookies.remove("access_token", { path: "/" });
       dispatch(cleanUser());
+      dispatch(resetMainFilters());
+      dispatch(resetModerFilters());
       toast.success("Выход выполнен успешно", {
         icon: "✅",
       });
@@ -91,7 +95,7 @@ const Header = () => {
               </div>
             ))}
           {isModerator && (
-            <Link to="/teachers_frontend/options-list">
+            <Link to="/teachers_frontend/teachers-list">
               <div className={styles.cart}>
                 <img style={{ width: 30 }} src={optList} alt="Cart" />
               </div>

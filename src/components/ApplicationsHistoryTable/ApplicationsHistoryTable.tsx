@@ -7,7 +7,7 @@ import styles from "./ApplicationsHistoryTable.module.scss"
 import Cookies from "universal-cookie"
 import { Link } from "react-router-dom"
 import { RootState } from "../../store/store"
-import Option from "../../types"
+import Teacher from "../../types"
 import tick from "../../assets/icons/tick.png"
 import close from "../../assets/icons/close.png"
 import Input from "../Input/Input"
@@ -49,9 +49,9 @@ const ApplicationsHistoryTable = () => {
     (state: RootState) => state.moderApp.date_value.end_date
   )
 
-  const handleSelect = (selectedOption: Option) => {
-    dispatch(setAppDropdownValueName(selectedOption.name))
-    dispatch(setAppDropdownValueId(selectedOption.id))
+  const handleSelect = (selectedTeacher: Teacher) => {
+    dispatch(setAppDropdownValueName(selectedTeacher.name))
+    dispatch(setAppDropdownValueId(selectedTeacher.id))
   }
 
   const fetchAppsData = async () => {
@@ -263,7 +263,7 @@ const ApplicationsHistoryTable = () => {
           />
           <DropDown
             handleSelect={handleSelect}
-            options={STATUSES}
+            teachers={STATUSES}
             title={facultyValue.name}
           />
           <div style={{ fontSize: "30px", marginLeft:"80px" }}>с</div>
