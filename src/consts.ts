@@ -19,7 +19,7 @@ export const FACULTY = [
   },
 ];
 // import engine from "./assets/engine.png"
-export const OptionsMock = [
+export const TeachersMock = [
   {
     id: 1,
     title: "Виктория Сергеевна",
