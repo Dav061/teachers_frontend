@@ -6,7 +6,7 @@ import styles from "./Teacherinfo.module.scss";
 
 import { cardInfoProps } from "../../../types";
 import { DOMEN } from "../../../consts";
-import { OptionsMock } from "../../../consts";
+import { TeachersMock } from "../../../consts";
 
 type TeacherInfoProps = {
   id: string;
@@ -25,16 +25,16 @@ const TeacherInfo: React.FC<TeacherInfoProps> = ({ id }) => {
   });
 
   useEffect(() => {
-    fetch(`${DOMEN}/options/${id}`)
+    fetch(`${DOMEN}/teachers/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        const option = data;
-        console.log(option);
-        setInfo(option);
+        const teacher = data;
+        console.log(teacher);
+        setInfo(teacher);
       })
       .catch((error) => {
         setMock(true);
-        let filteredGroups: cardInfoProps | undefined = OptionsMock.find(
+        let filteredGroups: cardInfoProps | undefined = TeachersMock.find(
           (group) => group.id == parseInt(id)
         );
         setInfo(filteredGroups);

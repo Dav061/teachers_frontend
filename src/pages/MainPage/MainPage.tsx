@@ -12,10 +12,10 @@ import Skeleton from "../../components/Skeleton/Skeleton";
 
 import styles from "./mainpage.module.scss";
 
-import Option from "../../types";
+import Teacher from "../../types";
 import { cardInfoProps } from "../../types";
 import { DOMEN, FACULTY} from "../../consts";
-import { OptionsMock } from "../../consts";
+import { TeachersMock } from "../../consts";
 
 const MainPage = () => {
   const [items, setItems] = useState<cardInfoProps[]>([]);
@@ -29,8 +29,8 @@ const MainPage = () => {
 //     setSliderValues(values);
 //   };
 
-  const handleDropDownChange = (selectedOption: Option) => {
-    setFacultyValue(selectedOption.name);
+  const handleDropDownChange = (selectedTeacher: Teacher) => {
+    setFacultyValue(selectedTeacher.name);
   };
 
   useEffect(() => {
@@ -38,11 +38,11 @@ const MainPage = () => {
       ? `?search=${encodeURIComponent(searchValue)}&faculty=${encodeURIComponent(facultyValue)}` 
       : `?faculty=${encodeURIComponent(facultyValue)}`;
     
-    fetch(`${DOMEN}/options/${params}`) //!!!!!!!!!!!!!!!
+    fetch(`${DOMEN}/teachers/${params}`) //!!!!!!!!!!!!!!!
       .then((response) => response.json())
       .then((data) => {
-        const options = data.options;
-        setItems(options);
+        const teachers = data.teachers;
+        setItems(teachers);
         setIsLoading(false);
       })
       .catch(() => {
@@ -52,29 +52,29 @@ const MainPage = () => {
   }, [searchValue, facultyValue]);
 
   const createMock = () => {
-    let filteredOptions: cardInfoProps[] = OptionsMock.filter(
-      (option) => option.available == true
+    let filteredTeachers: cardInfoProps[] = TeachersMock.filter(
+      (teacher) => teacher.available == true
     );
 
     if (searchValue) {
-      filteredOptions = filteredOptions.filter((option) =>
-        option.title.includes(searchValue)
+      filteredTeachers = filteredTeachers.filter((teacher) =>
+        teacher.title.includes(searchValue)
       );
     }
 
     // if (sliderValues) {
-    //   filteredOptions = filteredOptions.filter(
-    //     (option) =>
-    //       option.price > sliderValues[0] && option.price < sliderValues[1]
+    //   filteredTeachers = filteredTeachers.filter(
+    //     (teacher) =>
+    //       teacher.price > sliderValues[0] && teacher.price < sliderValues[1]
     //   );
     // }
 
     if (facultyValue != "Любой факультет") {
-      filteredOptions = filteredOptions.filter(
-        (option) => option.faculty == facultyValue
+      filteredTeachers = filteredTeachers.filter(
+        (teacher) => teacher.faculty == facultyValue
       );
     }
-    setItems(filteredOptions);
+    setItems(filteredTeachers);
   };
 
   return (
@@ -89,7 +89,7 @@ const MainPage = () => {
           <div className={styles.mainpage__filters}>
             <DropDown
               onChangeValue={handleDropDownChange}
-              options={FACULTY}
+              teachers={FACULTY}
               defaultTitle="Любой факультет"
             />
             {/* <SliderFilter

@@ -3,24 +3,24 @@ import { Dropdown } from "react-bootstrap";
 import styles from "./dropdown.module.scss";
 import { useState } from "react";
 
-import Option from "../../types";
+import Teacher from "../../types";
 
 export type DropDownProps = {
-  options: Option[];
+  teachers: Teacher[];
   defaultTitle: string;
-  onChangeValue: (selectedOption: Option) => void; // Добавленный проп
+  onChangeValue: (selectedTeacher: Teacher) => void; // Добавленный проп
 };
 
 const DropDown: React.FC<DropDownProps> = ({
-  options,
+  teachers,
   defaultTitle,
   onChangeValue,
 }) => {
-  const [title, setTitle] = useState<Option>(options[0]);
+  const [title, setTitle] = useState<Teacher>(teachers[0]);
 
-  const handleSelect = (selectedOption: Option) => {
-    setTitle(selectedOption);
-    onChangeValue(selectedOption);
+  const handleSelect = (selectedTeacher: Teacher) => {
+    setTitle(selectedTeacher);
+    onChangeValue(selectedTeacher);
   };
 
   return (
@@ -30,9 +30,9 @@ const DropDown: React.FC<DropDownProps> = ({
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdown__menu}>
-        {options.map((option) => (
-          <Dropdown.Item onClick={() => handleSelect(option)} key={option.id}>
-            {option.name}
+        {teachers.map((teacher) => (
+          <Dropdown.Item onClick={() => handleSelect(teacher)} key={teacher.id}>
+            {teacher.name}
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>
